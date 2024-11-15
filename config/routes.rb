@@ -9,4 +9,5 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create]
   end
 
+  get 'api/v1/reports/tickets_count', to: 'tickets#tickets_count'
 end
