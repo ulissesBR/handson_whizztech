@@ -1,4 +1,7 @@
 class TicketsController < ApplicationController
+    
+    require 'csv'
+
     def index
         tickets = Ticket.all
         render json: tickets
@@ -23,8 +26,8 @@ class TicketsController < ApplicationController
     end
 
     def tickets_csv #ação para gerar o csv.
-        
-        tickets = Tickets.all
+
+        tickets = Ticket.all
 
         csv_data = CSV.generate(headers:true) do |csv|
             csv << ['ticket_id', 'client_name', 'created_at'] #podemos alterar esses cabeçalhos se quisermos.
