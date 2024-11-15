@@ -21,6 +21,23 @@ class TicketsController < ApplicationController
 
         render json: { tickets_count: count }
     end
+
+    def tickets_csv #ação para gerar o csv.
+        
+        tickets = Tickets.all
+
+        csv_data = CSV.generate(headers:true) do |csv|
+            csv << ['ticket_id', 'client_name', 'created_at'] #podemos alterar esses cabeçalhos se quisermos.
+            
+            tickets.each do |ticket|
+                csv << [ticket.id, ticket.client_name, ticket.created_at]
+            end
+        end
+
+        #aqui vamos enviar o arquivo csv para o usuário que fez o request:
+        send_data csv_data, filename: "tickets_report.csv", type: "text/csv"
+    end
+
     private
 
     def ticket_params
